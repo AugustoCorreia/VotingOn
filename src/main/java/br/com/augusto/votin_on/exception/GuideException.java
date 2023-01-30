@@ -1,0 +1,11 @@
+package br.com.augusto.votin_on.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class GuideException extends RuntimeException {
+    public GuideException(String message) {
+        super(message);
+    }
+}

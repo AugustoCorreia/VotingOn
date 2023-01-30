@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5440/postgres
+    username: postgres
+    password: postgres
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: group_id
+  jpa:
+    hibernate:
+      ddl-auto: update
+server:
+  error:
+    include-stacktrace: never
