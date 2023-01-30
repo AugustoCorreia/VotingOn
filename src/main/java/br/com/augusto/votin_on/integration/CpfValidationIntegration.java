@@ -23,6 +23,7 @@ public class CpfValidationIntegration {
 
     private static final String BASE_URL = "https://user-info.herokuapp.com/users/%s";
     private static final Random RAND = new SecureRandom();
+    public static final String CPF_UNABLE_TO_VOTE = "CPF Unable to vote";
 
     private final RestTemplate restTemplate;
 
@@ -32,17 +33,17 @@ public class CpfValidationIntegration {
 
             if (!response.getStatusCode().equals(HttpStatus.OK)) {
                 log.error("Cpf Validation not working");
-                throw new VoteException("CPF Unable to vote");
+                throw new VoteException(CPF_UNABLE_TO_VOTE);
             }
 
             if (CpfStatusEnum.UNABLE_TO_VOTE.toString().equals(Objects.requireNonNull(response.getBody()).getStatus())){
-                throw new VoteException("CPF Unable to vote");
+                throw new VoteException(CPF_UNABLE_TO_VOTE);
             }
         } catch (HttpClientErrorException e){
             log.error(e.getMessage());
 
             if (CpfStatusEnum.UNABLE_TO_VOTE.equals(generateRandomValueForValidateCpf())){
-                throw new VoteException("CPF Unable to vote");
+                throw new VoteException(CPF_UNABLE_TO_VOTE);
             }
         }
     }

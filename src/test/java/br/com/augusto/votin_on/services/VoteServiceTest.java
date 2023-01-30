@@ -69,12 +69,10 @@ class VoteServiceTest {
     @Test
      void testDoVote_AlreadyVoted_ShouldThrowVoteException() {
         when(voteRepository.findByGuideIdAndUserCpf(anyLong(), anyString())).thenReturn(Optional.of(getVote()));
-        try {
-            voteService.doVote(getGuideVoteRequest(), getGuide());
-            fail("Expected VoteException to be thrown");
-        } catch (VoteException e) {
-            assertEquals("This CPF has voted on this guide", e.getMessage());
+
+            VoteException response = assertThrows(VoteException.class,()->voteService.doVote(getGuideVoteRequest(), getGuide()));
+
+            assertEquals("This CPF has voted on this guide", response.getMessage());
             verify(voteRepository, never()).save(any());
-        }
     }
 }
